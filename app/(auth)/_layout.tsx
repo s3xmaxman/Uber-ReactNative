@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-function AuthLayout() {
+const Layout = () => {
   return (
     <Stack>
       <Stack.Screen name="welcome" options={{ headerShown: false }} />
@@ -8,6 +8,6 @@ function AuthLayout() {
       <Stack.Screen name="sign-in" options={{ headerShown: false }} />
     </Stack>
   );
-}
+};
 
-export default AuthLayout;
+export default Layout;
