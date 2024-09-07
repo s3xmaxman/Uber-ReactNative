@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { icons, images } from "@/constants";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import OAuth from "@/components/OAuth";
 import { useSignUp } from "@clerk/clerk-expo";
 import { ReactNativeModal } from "react-native-modal";
@@ -127,10 +127,27 @@ const SignUp = () => {
 
         {/* 確認モーダル */}
         <ReactNativeModal isVisible={verification.state === "success"}>
-          <View className="bg-white px-7 py-7 rounded-2xl min-h-[300px]">
-            <Image
-              source={images.check}
-              className="w-[110px] h-[110px] mx-auto"
+          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+            <View className="mb-5">
+              <Image
+                source={images.check}
+                className="w-[110px] h-[110px] mx-auto"
+              />
+            </View>
+            <Text className="text-center text-3xl font-JakartaBold">
+              認証完了！
+            </Text>
+
+            <Text className="text-base text-gray-400 font-jakarta text-center mt-2">
+              アカウントの認証が正常に完了しました。
+            </Text>
+
+            <CustomButton
+              title="ホームへ"
+              className="mt-5"
+              onPress={() => {
+                router.push("/(root)/(tabs)/home");
+              }}
             />
           </View>
         </ReactNativeModal>
