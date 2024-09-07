@@ -9,6 +9,7 @@ import { useSignUp } from "@clerk/clerk-expo";
 import { ReactNativeModal } from "react-native-modal";
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -125,8 +126,45 @@ const SignUp = () => {
           </Link>
         </View>
 
+        {/* 認証 */}
+        <ReactNativeModal
+          isVisible={verification.state === "pending"}
+          onModalHide={() => {
+            if (verification.state === "success") {
+              setShowSuccessModal(true);
+            }
+          }}
+        >
+          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+            <Text className="font-JakartaExtraBold text-2xl mb-2">認証</Text>
+            <Text className="font-jakarta mb-5">
+              {form.email}へ認証コードを送信しました
+            </Text>
+            <InputField
+              label={"Code"}
+              icon={icons.lock}
+              placeholder={"12345"}
+              value={verification.code}
+              keyboardType="numeric"
+              onChangeText={(code) =>
+                setVerification({ ...verification, code })
+              }
+            />
+            {verification.error && (
+              <Text className="text-red-500 text-sm mt-1">
+                {verification.error}
+              </Text>
+            )}
+            <CustomButton
+              title="認証"
+              onPress={onPressVerify}
+              className="mt-5 bg-success-500"
+            />
+          </View>
+        </ReactNativeModal>
+
         {/* 確認モーダル */}
-        <ReactNativeModal isVisible={verification.state === "success"}>
+        <ReactNativeModal isVisible={showSuccessModal}>
           <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
             <View className="mb-5">
               <Image
