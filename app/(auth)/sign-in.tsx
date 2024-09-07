@@ -1,20 +1,40 @@
-import { View, Text, Image, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, Image, ScrollView, Alert } from "react-native";
+import React, { useCallback } from "react";
 import InputField from "@/components/InputField";
 import { icons, images } from "@/constants";
 import CustomButton from "@/components/CustomButton";
 import OAuth from "@/components/OAuth";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { useSignIn } from "@clerk/clerk-expo";
 
 const SignIn = () => {
+  const { signIn, isLoaded, setActive } = useSignIn();
   const [form, setForm] = React.useState({
     email: "",
     password: "",
   });
 
-  const onSignInPress = async () => {
-    // ログイン処理を実装する
-  };
+  const onSignInPress = useCallback(async () => {
+    if (!isLoaded) return;
+
+    try {
+      const signInAttempt = await signIn.create({
+        identifier: form.email,
+        password: form.password,
+      });
+
+      if (signInAttempt.status === "complete") {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace("/(root)/(tabs)/home");
+      } else {
+        console.log(JSON.stringify(signInAttempt, null, 2));
+        Alert.alert("Error", "Log in failed. Please try again.");
+      }
+    } catch (error: any) {
+      console.log(JSON.stringify(error, null, 2));
+      Alert.alert("Error", error.errors[0].longMessage);
+    }
+  }, [form, isLoaded]);
 
   return (
     <ScrollView className="flex-1 bg-white">
