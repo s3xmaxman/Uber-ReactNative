@@ -19,6 +19,6 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ data: response }), { status: 201 });
   } catch (error) {
     console.error("Error creating user:", error);
-    return new Response(JSON.stringify({ error: error }), { status: 500 });
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
