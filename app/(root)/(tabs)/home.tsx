@@ -139,7 +139,7 @@ export default function Page() {
   }) => {
     setDestinationLocation(location);
 
-    //
+    //@ts-ignore
     router.push("/(root)/find-ride");
   };
 
