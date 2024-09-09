@@ -1,11 +1,28 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { images } from "@/constants";
 
 const Chat = () => {
   return (
-    <SafeAreaView>
-      <Text>Chat</Text>
+    <SafeAreaView className="flex-1 bg-white p-5">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <Text className="text-2xl font-JakartaBold">チャット</Text>
+        <View className="flex-1 h-fit flex justify-center items-center">
+          <Image
+            source={images.message}
+            alt="メッセージ"
+            className="w-full h-40"
+            resizeMode="contain"
+          />
+          <Text className="text-3xl font-JakartaBold mt-3">
+            まだメッセージがありません
+          </Text>
+          <Text className="text-base mt-2 text-center px-7">
+            友達や家族との会話を始めましょう
+          </Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
