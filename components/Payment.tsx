@@ -21,7 +21,24 @@ const Payment = () => {
     destinationAddress,
     destinationLongitude,
   } = useLocationStore();
-  const openPaymentSheet = () => {};
+
+  const { userId } = useAuth();
+  const [success, setSuccess] = useState(false);
+
+  const openPaymentSheet = async () => {
+    await initializePaymentSheet();
+
+    const { error } = await presentPaymentSheet();
+
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message);
+    } else {
+      setSuccess(true);
+    }
+  };
+
+  const initializePaymentSheet = async () => {};
+
   return (
     <>
       <CustomButton
