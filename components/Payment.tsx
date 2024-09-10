@@ -1,11 +1,17 @@
 import { View, Text } from "react-native";
 import React from "react";
+import CustomButton from "./CustomButton";
 
 const Payment = () => {
+  const openPaymentSheet = () => {};
   return (
-    <View>
-      <Text>Payment</Text>
-    </View>
+    <>
+      <CustomButton
+        title="予約を確定"
+        className="my-10"
+        onPress={openPaymentSheet}
+      />
+    </>
   );
 };
 
