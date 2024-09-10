@@ -7,8 +7,10 @@ import { icons } from "@/constants";
 import { formatTime } from "@/lib/utils";
 import { useDriverStore, useLocationStore } from "@/store";
 import Payment from "@/components/Payment";
+import { useState } from "react";
 
 const BookRide = () => {
+  const [viewAll, setViewAll] = useState(false);
   const { user } = useUser();
   const { userAddress, destinationAddress } = useLocationStore();
   const { drivers, selectedDriver } = useDriverStore();
@@ -86,8 +88,13 @@ const BookRide = () => {
 
             <View className="flex flex-row items-center justify-start border-b border-general-700 w-full py-3">
               <Image source={icons.point} className="w-6 h-6" />
-              <Text className="text-lg font-JakartaRegular ml-2">
-                {destinationAddress}
+              <Text
+                className="text-lg font-JakartaRegular ml-2"
+                onPress={() => setViewAll(!viewAll)}
+              >
+                {viewAll
+                  ? destinationAddress
+                  : destinationAddress!.slice(0, 20)}
               </Text>
             </View>
           </View>
