@@ -43,7 +43,57 @@ const Payment = ({
     }
   };
 
-  const initializePaymentSheet = async () => {};
+  const initializePaymentSheet = async () => {
+    const { error } = await initPaymentSheet({
+      merchantDisplayName: "Ryde",
+      intentConfiguration: {
+        mode: {
+          amount: parseInt(amount) * 100,
+          currencyCode: "usd",
+        },
+        confirmHandler: async (
+          paymentMethod,
+          shouldSavePaymentMethod,
+          intentCreationCallback
+        ) => {
+          const { paymentIntent, customer } = await fetchAPI(
+            "/(api)/(stripe)/create",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: fullName || email.split("@")[0],
+                email: email,
+                amount: amount,
+                paymentMethod: paymentMethod.id,
+              }),
+            }
+          );
+
+          if (paymentIntent.client_secret) {
+            const { result } = await fetchAPI("/(api)/(stripe)/pay", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                payment_method_id: paymentMethod.id,
+                payment_intent_id: paymentIntent.id,
+                customer_id: customer,
+                client_secret: paymentIntent.client_secret,
+              }),
+            });
+
+            if (result.client_secret) {
+              // TODO: add ride create
+            }
+          }
+        },
+      },
+    });
+  };
 
   return (
     <>
