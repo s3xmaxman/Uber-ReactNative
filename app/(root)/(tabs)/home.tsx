@@ -118,9 +118,7 @@ export default function Page() {
             />
 
             <>
-              <Text className="text-xl font-JakartaBold mt-5 mb-3">
-                最近のロケーション
-              </Text>
+              <Text className="text-xl font-JakartaBold mt-5 mb-3">現在地</Text>
               <View className="flex flex-row items-center bg-transparent h-[300px]">
                 <Map />
               </View>

@@ -18,9 +18,7 @@ export function formatTime(minutes: number): string {
   } else {
     const hours = Math.floor(formattedMinutes / 60);
     const remainingMinutes = formattedMinutes % 60;
-    return `${hours}時間${
-      remainingMinutes > 0 ? ` ${remainingMinutes}分` : ""
-    }`;
+    return `${hours}時間 ${remainingMinutes}分`;
   }
 }
 
