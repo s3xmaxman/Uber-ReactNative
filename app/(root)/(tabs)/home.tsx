@@ -17,13 +17,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import { useFetch } from "@/lib/fetch";
+import { Ride } from "@/types/type";
 
 export default function Page() {
   const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
   const { signOut } = useAuth();
   const [hasPermission, setHasPermission] = useState(false);
-  const { data: recentRides, loading } = useFetch(`/(api)/ride/${user?.id}`);
+  const { data: recentRides, loading } = useFetch<Ride[]>(
+    `/(api)/ride/${user?.id}`
+  );
 
   const handleSignOut = () => {
     signOut();
@@ -70,7 +73,7 @@ export default function Page() {
   return (
     <SafeAreaView className="bg-general-500">
       <FlatList
-        data={recentRides}
+        data={recentRides?.slice(0, 5)}
         renderItem={({ item }) => <RideCard ride={item} />}
         className="px-5"
         keyboardShouldPersistTaps="handled"
