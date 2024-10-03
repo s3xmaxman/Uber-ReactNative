@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.s3xmaxman.ryde"
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +34,9 @@
           "origin": "https://ryde.dev/"
         }
       ],
-      ["expo-secure-store"]
+      [
+        "expo-secure-store"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
